@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta charset="UTF-8">
+  <link href="http://gmpg.org/xfn/11?ckcachebust=712524338" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <title>ScriptUI Dialog Builder</title>
+  
+  <meta name="description" content="A web app for designing ScriptUI dialogs with ease and export it as javascript.">
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png?v=xQdrX8olYR&ckcachebust=712524338">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png?v=xQdrX8olYR&ckcachebust=712524338">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png?v=xQdrX8olYR&ckcachebust=712524338">
+  <link rel="manifest" href="favicon/site.webmanifest?v=xQdrX8olYR&ckcachebust=712524338">
+  <link rel="mask-icon" href="favicon/safari-pinned-tab.svg?v=xQdrX8olYR&ckcachebust=712524338" color="#5bbad5">
+  <link rel="shortcut icon" href="favicon/favicon.ico?v=xQdrX8olYR&ckcachebust=712524338">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-config" content="favicon/browserconfig.xml?v=xQdrX8olYR">
+  <meta name="theme-color" content="#ffffff">
+  
+	<meta property="og:image:width" content="1345">
+	<meta property="og:image:height" content="704">
+	<meta property="og:description" content="A web app for designing ScriptUI dialogs with ease and export it as javascript.">
+	<meta property="og:title" content="ScriptUI Dialog Builder">
+	<meta property="og:url" content="https://scriptui.joonas.me">
+	<meta property="og:image" content="https://scriptui.joonas.me/open-graph/og-image.jpg">
+	
+	<style> body { color: #fff; } </style>
+	
+</head>
+<body>
+
+
+<div id="wrap">
+	
+	<div class="panel-wrap" data-panel="add" id="panel-new-item-wrap">
+		
+		<div class="panel-title">
+			<span>Add Items</span>
+		</div>
+		
+		<div class="label animated slideInDown">
+			<span>Add Items</span>
+		</div>
+		
+		<div class="overflow-wrap">
+			<div class="contents" style="padding-left: 0; padding-right: 0;">
+			</div>
+		</div>
+		
+		<div class="collapse">
+			<i class="fas fa-chevron-left"></i>
+		</div>
+		
+	</div>
+	
+	<div class="panel-wrap" data-panel="treeview" id="panel-tree-view-wrap">
+			
+			<!-- Just a quick and dirty way to make sure that the min-width is the title width -->
+			<div class="panel-title" style="position: relative; visibility: hidden; margin-top: -46px;">
+				<span>Structure</span>
+			</div>
+			<div class="panel-title">
+				<span>Structure</span>
+			</div>
+			
+			<div class="label animated slideInDown">
+				<span>Structure</span>
+			</div>
+			
+			<div class="overflow-wrap">
+				<div id="tree-view-contents" class="contents" data-parent="true">
+					
+				</div>
+			</div>
+			
+			<div class="collapse">
+				<i class="fas fa-chevron-left"></i>
+			</div>
+			
+		</div>
+		
+	<div class="panel-wrap" data-panel="edit" id="panel-edit-style-wrap">
+				
+				<div class="panel-title">
+					<span>Item Properties
+						<span class="item-prop-icon"></span>
+					</span>
+				</div>
+				
+				<div class="label animated slideInDown">
+					<span>Item Properties
+						<span style="display: inline-block; padding: 0 7px;">|</span> <span class="item-prop-icon"></span>
+					</span>
+				</div>
+				
+				<div class="overflow-wrap">
+					<div id="edit-style-contents" class="contents">
+						
+						<!-- Rest is generated laters... -->
+						<div id="edit-style-inner-container"></div>
+						
+					</div>
+				</div>
+				
+				<div class="collapse">
+					<i class="fas fa-chevron-left"></i>
+				</div>
+				
+			</div>
+			
+	<div class="panel-wrap collapse" data-panel="snapshots" id="panel-snapshots-wrap" data-lock="true">
+					
+					<div class="panel-title">
+						<span>Snapshots</span>
+					</div>
+					
+					<div class="label animated slideInDown">
+						<span>Snapshots <span class="ss-number"></spa></span>
+					</div>
+					
+					<div class="overflow-wrap">
+						<div class="contents">
+							
+							<div class="take-snapshot">
+								New snapshot <i class="fas fa-camera-retro"></i>
+							</div>
+							
+							<div class="snapshots"></div>
+							
+							<div class="info">
+								When you take a new snapshot, the import JSON of the current dialog is stored as a separate data point in local storage. This data point is saved in the browser but you can’t export it with the dialog. The only way to export snapshots is to load and export them one by one.
+								<br><br>
+								When you load a snapshot, it overwrites the current dialog, so be sure to take a new snapshot before loading if you wanna keep any changes.
+								<br><br>
+								Snapshot data doesn't travel with the rest of the code on export. 
+							</div>
+							
+						</div>
+					</div>
+					
+					<div class="collapse">
+						<i class="fas fa-chevron-left"></i>
+					</div>
+					
+				</div>
+				
+
+	<div id="dialog-section">
+		
+		<div id="clipboard-export-spinner" style="display: none;">
+      <div class="center-1">
+        <div class="center-2">
+          <div class="center-3">
+            <div class="circle">
+              <img src="assets/images/clipboard-copy-spinner.gif" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+		
+		<div id="toolbar">
+	    <div class="sample-dialog animated bounceInDown">
+	      <span class="icon"><i class="fas fa-table"></i></span>
+				<div class="text">Sample</div>
+	    </div>
+	    <!-- <div class="snapshot animated bounceInDown">
+	      <span class="icon"><i class="fas fa-camera-retro"></i></span>
+				<div class="text">Snapshots</div>
+	    </div> -->
+	    <div class="reset animated bounceInDown">
+	      <span class="icon"><i class="far fa-trash-alt"></i></span>
+				<div class="text">Delete</div>
+	    </div>
+			<div class="import animated bounceInDown">
+	      <span class="icon"><i class="far fa-folder-open"></i></span>
+				<div class="text">Import</div>
+	    </div>
+			<div class="export animated bounceInDown">
+	      <span class="icon"><i class="far fa-share-square"></i></span>
+				<div class="text">Export</div>
+				<!-- <div class="download btn animated fadeInDown">
+					<div class="icon">
+						<i class="fas fa-check animated"></i>
+						<i class="fas fa-download"></i>
+					</div>
+					 <span>Download</span>
+				</div>
+					<div class="copy btn animated fadeInDown">
+						<div class="icon">
+							<i class="fas fa-check animated"></i>
+							<i class="fas fa-times animated"></i>
+							<i class="fas fa-clipboard-list"></i>
+						</div>
+						 <span>Copy to Clipboard</span>
+					</div>
+				</div> -->
+	    </div>
+		</div>
+		
+		<div id="dialog-overlay-wrap">
+			<div class="custom-cursor-ping"></div>
+			<div class="center-1">
+			  <div class="center-2">
+			    <div class="center-3">
+						
+						<div id="dialog" class="animated fadeIn"></div> <!-- #dialog -->
+						
+						<div id="bottom-left-toolbar">
+							<div class="grey-out-active animated fadeInRight" title="Toggle active item accent color visibility in the dialog preview.">
+								<i class="far fa-lightbulb"></i>
+							</div>
+							
+					    <div class="info animated fadeInRight" title="Instructions">
+					      <a target="_blank" class="icon" href="https://scriptui.joonas.me/docs/">
+									<img src="assets/images/graduation-cap-bold.svg" alt="">
+								</a>
+					    </div>
+							
+					    <div class="github animated fadeInRight" title="Github">
+					      <a target="_blank" href="https://github.com/joonaspaakko/ScriptUI-Builder-Joonas">
+									<i class="fab fa-github"></i>
+					      </a>
+					    </div>
+						</div>
+						
+						<div class="i-am-legend">
+							<table>
+								<tr class="l-export">
+									<td class="desc">Export to clipboard</td>
+									<td class="shortcut">Alt + E</td>
+								</tr>
+								<tr class="l-sort">
+									<td class="desc">Reorder items <small>(Structure Panel)</small></td>
+									<td class="shortcut">Drag</td>
+								</tr>
+								<tr class="l-duplicate">
+									<td class="desc">Duplicate item <small>(Structure Panel)</small></td>
+									<td class="shortcut">Alt + Drag</td>
+								</tr>
+								<tr class="l-collapse">
+									<td class="desc">Collapse parent item <small>(Structure Panel)</small></td>
+									<td class="shortcut">Double click</td>
+								</tr>
+								<tr class="l-collapse">
+									<td class="desc">Hide item <small></small></td>
+									<td class="shortcut">Right click <small>→</small> Hide</td>
+								</tr>
+								<tr class="l-collapse">
+									<td class="desc">Copy item path <small></small></td>
+									<td class="shortcut">Right click <small>→</small> Copy...</td>
+								</tr>
+							</table>
+						</div>
+						
+			    </div>
+			  </div>
+			</div>
+		</div>
+		
+	</div>
+	
+</div>
+
+	
+	<link  href="assets/css/dialog.builder.css?ckcachebust=2C05A27FACF54411C6C26BD30A329735" rel="stylesheet">
+	<link  href="assets/css/libraries.css?ckcachebust=EB4B026AE6FC54AA11DB230ADA76B9CA" rel="stylesheet">
+	<script>
+	// Emergency services.
+	// Ctrl + Alt + L (4x) — Clears local_storage from dialog data refreshes the page.
+	var crisis_counter = 0;
+	document.addEventListener('keydown', function ( e ) {
+
+		var keycode = e.keyCode ? e.keyCode : e.which;
+		var ctrl_alt_l = keycode == 76 && e.altKey && e.ctrlKey;
+		if ( ctrl_alt_l ) {
+			crisis_counter += 1;
+			if ( crisis_counter >= 4 ) {
+				localStorage.removeItem( 'dialog' );
+				location.reload();
+			}
+		}
+		
+	});
+</script>
+	<script src="assets/js/libraries.js?ckcachebust=28F2748DF16259A5BE7E2ED51F5F152A"></script>
+	<script src="assets/js/dialog.builder.js?ckcachebust=70777F708E2EB44DDD51C830167DA34F"></script>
+
+</body>
+</html>
+

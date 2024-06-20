@@ -1,0 +1,18 @@
+{
+  "name": "photoshop-scriptui-dialog-builder",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "tauri": "tauri"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": ">=2.0.0-beta.0"
+  },
+  "packageManager": "yarn@1.22.21+sha1.1959a18351b811cdeedbd484a8f86c3cc3bbaf72",
+  "dependencies": {
+    "@tauri-apps/plugin-dialog": "^2.0.0-beta.5",
+    "@tauri-apps/plugin-fs": "^2.0.0-beta.5",
+    "@tauri-apps/plugin-upload": "^2.0.0-beta.6"
+  }
+}
